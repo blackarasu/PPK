@@ -23,7 +23,8 @@ int main()
 		lista* newLista = new lista();
 		newLista->metadata = data;//wpisanie dany "data" do listy;
 		last->next = newLista;//dopisanie struktury na koniec ca³ej listy
-		last=newLista;//przepisanie adresu astetniego elementu listy na pomocnicz¹ ostatni¹
+		last = newLista;//przepisanie adresu astetniego elementu listy na pomocnicz¹ ostatni¹
+	}
     return 0;
 }
 
