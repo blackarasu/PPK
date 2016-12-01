@@ -27,3 +27,7 @@
 *.exe
 *.out
 *.app
+/Lista jednokierunkowa/ipch/LISTA JEDNOKIERUNKOWA-24637cda
+/Lista jednokierunkowa/.vs/Lista jednokierunkowa/v14
+/Lista jednokierunkowa/Lista jednokierunkowa.VC.VC.opendb
+/Lista jednokierunkowa/Lista jednokierunkowa.VC.db
