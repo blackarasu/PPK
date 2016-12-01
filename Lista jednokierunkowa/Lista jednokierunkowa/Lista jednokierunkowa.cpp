@@ -22,8 +22,9 @@ int main()
 		std::cin >> data;
 		lista* newLista = new lista();
 		newLista->metadata = data;//wpisanie dany "data" do listy;
-		last->next = newLista;//dopisanie struktury na koniec ca³ej listy
-		last=newLista;//przepisanie adresu astetniego elementu listy na pomocnicz¹ ostatni¹
+		last->next = newLista;//dopisanie struktury na koniec caÂ³ej listy
+		last=newLista;//przepisanie adresu astetniego elementu listy na pomocniczÂ¹ ostatniÂ¹
+	}
     return 0;
 }
 
