@@ -31,3 +31,8 @@
 /Lista jednokierunkowa/.vs/Lista jednokierunkowa/v14
 /Lista jednokierunkowa/Lista jednokierunkowa.VC.VC.opendb
 /Lista jednokierunkowa/Lista jednokierunkowa.VC.db
+/Lista jednokierunkowa/Debug
+*.pdb
+*.idb
+/Lista jednokierunkowa/Lista jednokierunkowa/Debug/Lista je.FF3B5717.tlog
+/Lista jednokierunkowa/Lista jednokierunkowa/Debug
