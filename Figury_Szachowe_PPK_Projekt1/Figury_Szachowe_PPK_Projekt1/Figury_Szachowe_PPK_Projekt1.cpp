@@ -7,7 +7,8 @@
 #include <cstdlib>
 #include "chessFunctions.h" //nag³owek ze wszystkimi funkcjami które zosta³e u¿yte w tym projekcie
 
-
+const int toBeginingOfTab = 1;
+const int evenNumber = 2;
 
 //BIa³e figury na górze czarne na dole -> bia³e ma³e, czarne du¿e
 int main()
@@ -22,11 +23,10 @@ int main()
 	int positionX=0, positionY=0;
 	char positionXChar=' ';
 	bool check_cin = false;
-
-	do {
-
+	do 
+	{
 		std::cout << "Podaj pozycje figury na szachownicy <a-h><1-8> ";
-		positionXChar=_getch();
+		positionXChar = _getch();
 		std::cout << positionXChar;
 		positionY = _getch();
 		std::cout << positionY - (int)'0' << std::endl;
@@ -34,17 +34,18 @@ int main()
 		if (((positionXChar<'a' || positionXChar>'h') && (positionXChar<'A' || positionXChar>'H'))) {
 			system("cls");
 			std::cout << "!POZYCJA FIGURY MA BYC POMIEDZY  \'a\' a \'h\' I POMIEDZY \'1\' a \'8\'" << std::endl
-			<<"np. G2"<<std::endl;
+				<< "np. G2" << std::endl;
 		}
 
-	} while ((positionXChar<'a' || positionXChar>'h') && (positionXChar<'A' || positionXChar>'H')|| positionY<'1' || positionY>chessWidth + (int)'0');
+	} while ((positionXChar<'a' || positionXChar>'h') && (positionXChar<'A' || positionXChar>'H') || positionY<'1' || positionY>chessWidth + (int)'0');
 	positionX = convertToIndex(positionXChar);
-	if (positionX == -1) {
+	if (positionX == -1) 
+	{
 		std::cout << "Cos poszlo nietak";
 	}
-	positionY-=(int)'0'+1;
+	positionY -= (int)'0' + 1;
 
-//Zaczecie menu
+	//Zaczecie menu
 	char color, figure;
 	std::cout << "\n\t\t\tMENU" << std::endl
 		<< "\tWybierz kolor" << std::endl
@@ -52,16 +53,16 @@ int main()
 		<< "<c> Czarny" << std::endl
 		<< "Twoj wybor: ";
 	color = _getch();
-	std::cout << color<<std::endl;
+	std::cout << color << std::endl;
 	switch (color)
 	{
 		//Biale figury (od 10)
 	case 'b':
 		system("title Figury - Biale");
-		std::cout<< "\tWybierz figure" << std::endl
+		std::cout << "\tWybierz figure" << std::endl
 			<< "<w> Wieza" << std::endl
 			<< "<g> Goniec" << std::endl
-			<< "<s> Skoczek" << std::endl 
+			<< "<s> Skoczek" << std::endl
 			<< "<k> Krol" << std::endl
 			<< "<h> lub <q> Hetman/Queen" << std::endl
 			<< "<p> Pionek" << std::endl
@@ -74,32 +75,32 @@ int main()
 			//Wieza (11)
 		case 'w':
 			system("title Figury - Biale - Wieza");
-			chess[chessLength-1-positionY][positionX] = 'w';
-			tower(chessLength-1-positionY, positionX, chess);
+			chess[chessLength - toBeginingOfTab - positionY][positionX] = 'w';
+			tower(chessLength - toBeginingOfTab - positionY, positionX, chess);
 
 			break;
 
 			//Goniec (12)
 		case 'g':
 			system("title Figury - Biale - Goniec");
-			chess[chessLength-1-positionY][positionX] = 'g';
-			bishop(chessLength-1-positionY, positionX, chess);
+			chess[chessLength - toBeginingOfTab - positionY][positionX] = 'g';
+			bishop(chessLength - toBeginingOfTab - positionY, positionX, chess);
 
 			break;
 
 			//Skoczek (13)
 		case 's':
 			system("title Figury - Biale - Skoczek");
-			chess[chessLength-1-positionY][positionX] = 's';
-			jumper(chessLength-1-positionY, positionX, chess);
+			chess[chessLength - toBeginingOfTab - positionY][positionX] = 's';
+			jumper(chessLength - toBeginingOfTab - positionY, positionX, chess);
 
 			break;
 
 			//Krol (14)
 		case 'k':
 			system("title Figury - Biale - Krol");
-			chess[chessLength - 1 - positionY][positionX] = 'k';
-			king(chessLength - 1 - positionY, positionX, chess);
+			chess[chessLength - toBeginingOfTab - positionY][positionX] = 'k';
+			king(chessLength - toBeginingOfTab - positionY, positionX, chess);
 
 			break;
 
@@ -107,31 +108,33 @@ int main()
 		case 'h':
 		case 'q':
 			system("title Figury - Biale - Hetman");
-			chess[chessLength - 1 - positionY][positionX] = 'q';
-			queen(chessLength - 1 - positionY, positionX, chess);
+			chess[chessLength - toBeginingOfTab - positionY][positionX] = 'q';
+			queen(chessLength - toBeginingOfTab - positionY, positionX, chess);
 
 			break;
 
 			//Pionek (16)
 		case 'p':
 			system("title Figury - Biale - Pionek");
-			if (chessLength - 1 - positionY == 0)
+			if (chessLength - toBeginingOfTab - positionY == endOfBoard)
 			{
-				std::cout << "Nie jest mozliwe by pionek bialy byl na tym polu"<<std::endl;
+				std::cout << "Nie jest mozliwe by pionek bialy byl na tym polu" << std::endl;
 				break;
 			}
-			chess[chessLength - 1 - positionY][positionX] = 'p';
+			chess[chessLength - toBeginingOfTab - positionY][positionX] = 'p';
 
-			if (chessLength - 1 - positionY == 1)
+			if (chessLength - toBeginingOfTab - positionY == startPositionWhitePawn)
 			{
-				chess[chessLength - 1 - positionY + 1][positionX] = 'X';
-				chess[chessLength - 1 - positionY + 2][positionX] = 'X';
+				chess[chessLength - positionY][positionX] = 'X';
+				chess[chessLength - positionY + toBeginingOfTab][positionX] = 'X';
 			}
-			else if (chessLength - 1 - positionY == 7)
-				std::cout << "Pionek bialy nie moze wykonac wiecej ruchow"<<std::endl;
+			else if (chessLength - toBeginingOfTab - positionY == beginingOfBoard)
+			{
+				std::cout << "Pionek bialy nie moze wykonac wiecej ruchow" << std::endl;
+			}
 			else
 			{
-				chess[chessLength - 1 - positionY + 1][positionX] = 'X';
+				chess[chessLength - positionY][positionX] = 'X';
 			}
 			break;
 
@@ -145,14 +148,14 @@ int main()
 		//Czarne figury (od 20)
 	case 'c':
 		system("title Figury - Czarne");
-		std::cout<< std::endl <<"\tWybierz figure"
-			<< std::endl <<"<w> Wieza"
-			<< std::endl <<"<g> Goniec"
-			<< std::endl <<"<s> Skoczek"
-			<< std::endl <<"<k> Krol"
-			<< std::endl <<"<h> lub <q> Hetman/Queen"
-			<< std::endl <<"<p> Pionek"
-			<< std::endl <<"Twoj wybor: ";
+		std::cout << std::endl << "\tWybierz figure"
+			<< std::endl << "<w> Wieza"
+			<< std::endl << "<g> Goniec"
+			<< std::endl << "<s> Skoczek"
+			<< std::endl << "<k> Krol"
+			<< std::endl << "<h> lub <q> Hetman/Queen"
+			<< std::endl << "<p> Pionek"
+			<< std::endl << "Twoj wybor: ";
 		figure = _getch(); //wziêcie 1 znaku z klawiatury 
 		std::cout << figure;
 		system("cls");
@@ -161,59 +164,59 @@ int main()
 			//Wieza (21)
 		case 'w':
 			system("title Figury - Czarne - Wieza");
-			chess[chessLength - 1 - positionY][positionX] = 'W';
-			tower(chessLength - 1 - positionY, positionX, chess);
+			chess[chessLength - toBeginingOfTab - positionY][positionX] = 'W';
+			tower(chessLength - toBeginingOfTab - positionY, positionX, chess);
 			break;
 
 			//Goniec (22)
 		case 'g':
 			system("title Figury - Czarne - Goniec");
-			chess[chessLength - 1 - positionY][positionX] = 'G';
-			bishop(chessLength - 1 - positionY, positionX, chess);
+			chess[chessLength - toBeginingOfTab - positionY][positionX] = 'G';
+			bishop(chessLength - toBeginingOfTab - positionY, positionX, chess);
 			break;
 
 			//Skoczek (23)
 		case 's':
 			system("title Figury - Czarne - Skoczek");
-			chess[chessLength - 1 - positionY][positionX] = 'S';
-			jumper(chessLength - 1 - positionY, positionX, chess);
+			chess[chessLength - toBeginingOfTab - positionY][positionX] = 'S';
+			jumper(chessLength - toBeginingOfTab - positionY, positionX, chess);
 			break;
 
 			//Krol (24)
 		case 'k':
 			system("title Figury - Czarne - Krol");
-			chess[chessLength - 1 - positionY][positionX] = 'K';
-			king(chessLength - 1 - positionY, positionX, chess);
+			chess[chessLength - toBeginingOfTab - positionY][positionX] = 'K';
+			king(chessLength - toBeginingOfTab - positionY, positionX, chess);
 			break;
 
 			//Hetma/Queen/Krolowa (25)
 		case 'h':
 		case 'q':
 			system("title Figury - Czarne - Hetman");
-			chess[chessLength - 1 - positionY][positionX] = 'Q';
-			queen(chessLength - 1 - positionY, positionX, chess);
+			chess[chessLength - toBeginingOfTab - positionY][positionX] = 'Q';
+			queen(chessLength - toBeginingOfTab - positionY, positionX, chess);
 			break;
 
 			//Pionek (26)
 		case 'p':
 			system("title Figury - Czarne - Pionek");
-			if (chessLength - 1 - positionY == 7)
+			if (chessLength - toBeginingOfTab - positionY == beginingOfBoard)
 			{
 				std::cout << "Nie jest mozliwe by pionek czarny byl na tym polu" << std::endl;
 				break;
 			}
-			chess[chessLength - 1 - positionY][positionX] = 'P';
+			chess[chessLength - toBeginingOfTab - positionY][positionX] = 'P';
 
-			if (chessLength - 1 - positionY == 6)
+			if (chessLength - toBeginingOfTab - positionY == startPositionBlackPawn)
 			{
-				chess[chessLength - 1 - positionY - 1][positionX] = 'X';
-				chess[chessLength - 1 - positionY - 2][positionX] = 'X';
+				chess[chessLength - 2 * toBeginingOfTab - positionY][positionX] = 'X';
+				chess[chessLength - 3 * toBeginingOfTab - positionY][positionX] = 'X';
 			}
-			else if (chessLength - 1 - positionY == 0)
+			else if (chessLength - toBeginingOfTab - positionY == endOfBoard)
 				std::cout << "Pionek czarny nie moze wykonac wiecej ruchow" << std::endl;
 			else
 			{
-				chess[chessLength - 1 - positionY - 1][positionX] = 'X';
+				chess[chessLength - 2 * toBeginingOfTab - positionY][positionX] = 'X';
 			}
 			break;
 
@@ -228,7 +231,7 @@ int main()
 		check_cin = true;
 		break;
 	}
-
+	
 	if (!check_cin)
 	{
 		//UCHWYT DO KONSOLI czyli dostêp do tablicy GUI (chyba) 
@@ -246,10 +249,10 @@ int main()
 
 
 		std::cout << std::endl << "   A  B  C  D  E  F  G  H" << std::endl;
-		for (int i = 0; i<chessWidth; i++)
+		for (int i = 0; i < chessWidth; i++)
 		{
 			std::cout << chessLength - i << " ";
-			for (int j = 0; j<chessLength; j++)
+			for (int j = 0; j < chessLength; j++)
 			{
 				//Przywrócenie postawowych kolorów
 				SetConsoleTextAttribute(h0ut, wOldColorAttrs);

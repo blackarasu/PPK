@@ -1,6 +1,12 @@
 #include "stdafx.h"
 #include "chessFunctions.h"
 
+
+const int endOfBoard = 0;
+const int beginingOfBoard = 7;
+const int startPositionWhitePawn = 1;
+const int startPositionBlackPawn = 6;
+
 int convertToIndex(char position) {
 	switch (position) {
 	case 'A':
@@ -109,4 +115,8 @@ void king(int positionY, int positionX, char chess[chessWidth][chessLength])
 		chess[positionY][positionX + 1] = 'X';
 	if (positionX - 1 >= 0)
 		chess[positionY][positionX - 1] = 'X';
+}
+
+void pawn(int positionY, int positionX, char chess[chessWidth][chessLength]) {
+
 }
