@@ -6,7 +6,7 @@
 void clearBoard(char chessboard[chessWidth][chessLength]) {
 	for (int i = 0; i < chessLength; i++) {
 		for (int j = 0; j < chessWidth; j++) {
-			chessboard[i][j] = ' ';
+			chessboard[i][j] = BLANK_FIELD;
 		}
 	}
 }
@@ -97,11 +97,9 @@ void drawChessBoard(char chess[chessWidth][chessLength],Cursor* pointer) {
 		std::cout << chessLength - i << " ";
 		for (int j = 0; j < chessLength; j++)
 		{
-			//Przywrócenie postawowych kolorów
-			SetConsoleTextAttribute(h0ut, wOldColorAttrs);
-
+			SetConsoleTextAttribute(h0ut, wOldColorAttrs); //Regular colors
 			if (i == pointer->y&&j == pointer->x) {
-				if (chess[i][j] == ' ')
+				if (chess[i][j] == BLANK_FIELD)
 				{
 					SetConsoleTextAttribute(h0ut, cursorBackground);
 				}
@@ -116,7 +114,7 @@ void drawChessBoard(char chess[chessWidth][chessLength],Cursor* pointer) {
 				std::cout << " " << chess[i][j] << " ";
 			}
 			else if (i == pointer->chosenY && j == pointer->chosenX) {
-				if (chess[i][j] == ' ')
+				if (chess[i][j] == BLANK_FIELD)
 				{
 					SetConsoleTextAttribute(h0ut, chosenBackground);
 				}
@@ -132,7 +130,7 @@ void drawChessBoard(char chess[chessWidth][chessLength],Cursor* pointer) {
 			}
 			else if ((i + j) % 2 == 0) {
 
-				if (chess[i][j] == ' ')
+				if (chess[i][j] == BLANK_FIELD)
 				{
 					SetConsoleTextAttribute(h0ut, whiteBACKGROUND);
 				}
@@ -179,7 +177,7 @@ void clearX(char chessBoard[chessWidth][chessLength])
 	for (int i = 0; i < chessWidth; i++) {
 		for (int j = 0; j < chessLength; j++) {
 			if (chessBoard[i][j] == 'X') {
-				chessBoard[i][j] = ' ';
+				chessBoard[i][j] = BLANK_FIELD;
 			}
 		}
 	}
@@ -227,7 +225,9 @@ void movePointer(Cursor * pointer,char chess[chessWidth][chessLength])
 
 		}
 		else {
-			setChosen(pointer);
+			if (chess[pointer->y][pointer->x] != BLANK_FIELD) {
+				setChosen(pointer);
+			}
 		}
 		break;
 	case char(ESCAPE) :
@@ -236,5 +236,3 @@ void movePointer(Cursor * pointer,char chess[chessWidth][chessLength])
 		break;
 	}	
 }
-
-

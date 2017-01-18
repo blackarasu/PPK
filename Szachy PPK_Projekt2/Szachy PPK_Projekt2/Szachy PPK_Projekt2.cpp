@@ -8,14 +8,14 @@
 int main()
 {
 	bool finish = false;
-	ThreeLastMoves* Move0 = new ThreeLastMoves();
-	ThreeLastMoves* currentMove = Move0;
+	LastMoves* Move0 = new LastMoves();
+	LastMoves* currentMove = Move0;
 	Cursor c('b'), c1('w');
 	char chessBoard[chessLength][chessWidth];
 	clearBoard(chessBoard);
 	putFigures(chessBoard);
 	addToLastMove(chessBoard, currentMove->ChessBoard);
-	ThreeLastMoves* lastMove = new ThreeLastMoves();
+	LastMoves* lastMove = new LastMoves();
 	currentMove = lastMove;
 	do {//game loop
 		system("cls");

@@ -23,3 +23,4 @@ const int JUMPERS_POSITION1 = 1;
 const int JUMPERS_POSITION2 = 6;
 const int BISHOPS_POSITION1 = 2;
 const int BISHOPS_POSITION2 = 5;
+const char BLANK_FIELD = ' ';

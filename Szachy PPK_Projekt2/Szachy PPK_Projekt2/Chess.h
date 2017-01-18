@@ -26,10 +26,10 @@ struct Cursor {
 		}
 	}
 };
-struct ThreeLastMoves {
+struct LastMoves {
 	char ChessBoard[chessLength][chessWidth];
-	ThreeLastMoves* previous;
-	ThreeLastMoves* next;
+	LastMoves* previous;
+	LastMoves* next;
 };
 
 void clearBoard(char chessboard[chessWidth][chessLength]);
