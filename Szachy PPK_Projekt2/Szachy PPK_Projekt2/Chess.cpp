@@ -226,7 +226,31 @@ void movePointer(Cursor * pointer,char chess[chessWidth][chessLength])
 		}
 		else {
 			if (chess[pointer->y][pointer->x] != BLANK_FIELD) {
-				setChosen(pointer);
+				char chosenFigure = chess[pointer->y][pointer->x];
+				if (pointer->cursorColor == 'w') {
+					switch (chosenFigure) {
+					case't':
+					case'j':
+					case'b':
+					case'q':
+					case'k':
+					case'p':
+						setChosen(pointer);
+						break;
+					}
+				}
+				else {
+					switch (chosenFigure) {
+					case'T':
+					case'J':
+					case'B':
+					case'Q':
+					case'K':
+					case'P':
+						setChosen(pointer);
+						break;
+					}
+				}
 			}
 		}
 		break;
@@ -236,3 +260,4 @@ void movePointer(Cursor * pointer,char chess[chessWidth][chessLength])
 		break;
 	}	
 }
+
