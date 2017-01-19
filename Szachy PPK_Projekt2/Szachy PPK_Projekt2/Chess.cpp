@@ -11,7 +11,7 @@ void clearBoard(char chessboard[chessWidth][chessLength]) {
 	}
 }
 
-void startPawns(char chessBoard[chessLength][chessWidth]) {
+void startPawns(char chessBoard[chessWidth][chessLength]) {
 	for (int i = 0; i < chessWidth; i++) {
 		chessBoard[whitePawnsPosition][i] = 'p';
 	}
@@ -20,37 +20,37 @@ void startPawns(char chessBoard[chessLength][chessWidth]) {
 	}
 }
 
-void startTowers(char chessBoard[chessLength][chessWidth]) {
+void startTowers(char chessBoard[chessWidth][chessLength]) {
 	chessBoard[whiteSecondLane][TOWERS_POSITION1] = 't';
 	chessBoard[whiteSecondLane][TOWERS_POSITION2] = 't';
 	chessBoard[blackSecondLane][TOWERS_POSITION1] = 'T';
 	chessBoard[blackSecondLane][TOWERS_POSITION2] = 'T';
 }
 
-void startQueens(char chessBoard[chessLength][chessWidth]) {
+void startQueens(char chessBoard[chessWidth][chessLength]) {
 	chessBoard[whiteSecondLane][QUEEN_POSITION] = 'q';
 	chessBoard[blackSecondLane][QUEEN_POSITION] = 'Q';
 }
 
-void startJumpers(char chessBoard[chessLength][chessWidth]) {
+void startJumpers(char chessBoard[chessWidth][chessLength]) {
 	chessBoard[whiteSecondLane][JUMPERS_POSITION1] = 'j';
 	chessBoard[whiteSecondLane][JUMPERS_POSITION2] = 'j';
 	chessBoard[blackSecondLane][JUMPERS_POSITION1] = 'J';
 	chessBoard[blackSecondLane][JUMPERS_POSITION2] = 'J';
 }
 
-void startKings(char chessBoard[chessLength][chessWidth]) {
+void startKings(char chessBoard[chessWidth][chessLength]) {
 	chessBoard[whiteSecondLane][KING_POSITION] = 'k';
 	chessBoard[blackSecondLane][KING_POSITION] = 'K';
 }
-void startBishops(char chessBoard[chessLength][chessWidth]) {
+void startBishops(char chessBoard[chessWidth][chessLength]) {
 	chessBoard[whiteSecondLane][BISHOPS_POSITION1] = 'b';
 	chessBoard[whiteSecondLane][BISHOPS_POSITION2] = 'b';
 	chessBoard[blackSecondLane][BISHOPS_POSITION1] = 'B';
 	chessBoard[blackSecondLane][BISHOPS_POSITION2] = 'B';
 }
 
-void putFigures(char chessBoard[chessLength][chessWidth]) {
+void putFigures(char chessBoard[chessWidth][chessLength]) {
 	startPawns(chessBoard);
 	startTowers(chessBoard);
 	startQueens(chessBoard);
@@ -69,7 +69,7 @@ void drawMenu()
 }
 
 
-void drawChessBoard(char chess[chessWidth][chessLength],Cursor* pointer) {
+void drawChessBoard(char chess[chessWidth][chessLength],Cursor* pointer, char possibleMoves[chessWidth][chessLength]) {
 	HANDLE h0ut;
 	h0ut = GetStdHandle(STD_OUTPUT_HANDLE);
 	WORD wOldColorAttrs, whiteBACKGROUND, redFOREGROUND, greenFOREGROUND, cursorBackground,chosenBackground;
@@ -99,13 +99,17 @@ void drawChessBoard(char chess[chessWidth][chessLength],Cursor* pointer) {
 		{
 			SetConsoleTextAttribute(h0ut, wOldColorAttrs); //Regular colors
 			if (i == pointer->y&&j == pointer->x) {
-				if (chess[i][j] == BLANK_FIELD)
-				{
-					SetConsoleTextAttribute(h0ut, cursorBackground);
-				}
-				else if (chess[i][j] == 'X')
+				if (possibleMoves[i][j] == 'X')
 				{
 					SetConsoleTextAttribute(h0ut, greenFOREGROUND | cursorBackground);
+					if (chess[i][j] == ' ') {
+						std::cout << " " << possibleMoves[i][j] << " ";
+						continue;
+					}
+				}
+				else if (chess[i][j] == BLANK_FIELD)
+				{
+					SetConsoleTextAttribute(h0ut, cursorBackground);
 				}
 				else
 				{
@@ -114,13 +118,17 @@ void drawChessBoard(char chess[chessWidth][chessLength],Cursor* pointer) {
 				std::cout << " " << chess[i][j] << " ";
 			}
 			else if (i == pointer->chosenY && j == pointer->chosenX) {
-				if (chess[i][j] == BLANK_FIELD)
-				{
-					SetConsoleTextAttribute(h0ut, chosenBackground);
-				}
-				else if (chess[i][j] == 'X')
+				if (possibleMoves[i][j] == 'X')
 				{
 					SetConsoleTextAttribute(h0ut, greenFOREGROUND | chosenBackground);
+					if (chess[i][j] == ' ') {
+						std::cout << " " << possibleMoves[i][j] << " ";
+						continue;
+					}
+				}
+				else if (chess[i][j] == BLANK_FIELD)
+				{
+					SetConsoleTextAttribute(h0ut, chosenBackground);
 				}
 				else
 				{
@@ -128,15 +136,18 @@ void drawChessBoard(char chess[chessWidth][chessLength],Cursor* pointer) {
 				}
 				std::cout << " " << chess[i][j] << " ";
 			}
-			else if ((i + j) % 2 == 0) {
-
-				if (chess[i][j] == BLANK_FIELD)
-				{
-					SetConsoleTextAttribute(h0ut, whiteBACKGROUND);
-				}
-				else if (chess[i][j] == 'X')
+			else if ((i + j) % evenNumber == 0) {
+				if (possibleMoves[i][j] == 'X')
 				{
 					SetConsoleTextAttribute(h0ut, greenFOREGROUND | whiteBACKGROUND);
+					if (chess[i][j] == ' ') {
+						std::cout << " " << possibleMoves[i][j] << " ";
+						continue;
+					}
+				}
+				else if (chess[i][j] == BLANK_FIELD)
+				{
+					SetConsoleTextAttribute(h0ut, whiteBACKGROUND);
 				}
 				else
 				{
@@ -145,9 +156,13 @@ void drawChessBoard(char chess[chessWidth][chessLength],Cursor* pointer) {
 				std::cout << " " << chess[i][j] << " ";
 			}
 			else {
-				if (chess[i][j] == 'X')
+				if (possibleMoves[i][j] == 'X')
 				{
 					SetConsoleTextAttribute(h0ut, greenFOREGROUND);
+					if (chess[i][j] == ' ') {
+						std::cout << " " << possibleMoves[i][j] << " ";
+						continue;
+					}
 				}
 				else
 				{
@@ -197,7 +212,7 @@ void notChosen(Cursor * pointer)
 	pointer->chosenY = -1;
 }
 
-void movePointer(Cursor * pointer,char chess[chessWidth][chessLength])
+void movePointer(Cursor * pointer,char chess[chessWidth][chessLength], char possibleMoves[chessWidth][chessLength])
 {
 	switch (_getch()) {
 	case 'w':
@@ -236,6 +251,7 @@ void movePointer(Cursor * pointer,char chess[chessWidth][chessLength])
 					case'k':
 					case'p':
 						setChosen(pointer);
+						drawPossibleMoves(pointer, &chosenFigure, chess, possibleMoves);
 						break;
 					}
 				}
@@ -248,6 +264,7 @@ void movePointer(Cursor * pointer,char chess[chessWidth][chessLength])
 					case'K':
 					case'P':
 						setChosen(pointer);
+						drawPossibleMoves(pointer, &chosenFigure, chess, possibleMoves);
 						break;
 					}
 				}
@@ -256,8 +273,97 @@ void movePointer(Cursor * pointer,char chess[chessWidth][chessLength])
 		break;
 	case char(ESCAPE) :
 		notChosen(pointer);
-		clearX(chess);
+		clearX(possibleMoves);
 		break;
 	}	
+}
+
+void drawPossibleMoves(Cursor * pointer, char * figure, char chessBoard[chessWidth][chessLength], char possibleMoves[chessWidth][chessLength])
+{
+	switch (*figure) {
+	case'b':
+	case'B':
+		bishop(pointer, chessBoard, possibleMoves);
+		break;
+	case'j':
+	case'J':
+		jumper(pointer, chessBoard, possibleMoves);
+		break;
+	case'k':
+	case'K':
+		king(pointer, chessBoard, possibleMoves);
+		break;
+	case'q':
+	case'Q':
+		queen(pointer, chessBoard, possibleMoves);
+		break;
+	case'p':
+	case'P':
+		pawn(pointer, chessBoard, possibleMoves);
+		break;
+	case't':
+	case'T':
+		tower(pointer, chessBoard, possibleMoves);
+		break;	
+	}
+}
+
+void bishop(Cursor * pointer, char chessBoard[chessWidth][chessLength], char possibleMoves[chessWidth][chessLength])
+{
+}
+
+void jumper(Cursor * pointer, char chessBoard[chessWidth][chessLength], char possibleMoves[chessWidth][chessLength])
+{
+}
+
+void king(Cursor * pointer, char chessBoard[chessWidth][chessLength], char possibleMoves[chessWidth][chessLength])
+{
+}
+
+void queen(Cursor * pointer, char chessBoard[chessWidth][chessLength], char possibleMoves[chessWidth][chessLength])
+{
+}
+
+void pawn(Cursor * pointer, char chessBoard[chessWidth][chessLength], char possibleMoves[chessWidth][chessLength])
+{
+	if (pointer->cursorColor=='w') {
+		if (pointer->y == whitePawnsPosition) {
+			
+			if (chessBoard[pointer->y + 2 * NEXT_POSITION][pointer->x] == BLANK_FIELD) {
+				possibleMoves[pointer->y + 2 * NEXT_POSITION][pointer->x] = 'X';
+			}
+		}
+		if (chessBoard[pointer->y + NEXT_POSITION][pointer->x] == BLANK_FIELD)
+		{
+			possibleMoves[pointer->y + NEXT_POSITION][pointer->x] = 'X';
+		}
+		if (pointer->x + NEXT_POSITION < chessLength && chessBoard[pointer->y + NEXT_POSITION][pointer->x + NEXT_POSITION]!=BLANK_FIELD) {
+			possibleMoves[pointer->y + NEXT_POSITION][pointer->x + NEXT_POSITION] = 'X';
+		}
+		if (pointer->x - NEXT_POSITION > CHESSLEFT && chessBoard[pointer->y + NEXT_POSITION][pointer->x - NEXT_POSITION]!=BLANK_FIELD) {
+			possibleMoves[pointer->y + NEXT_POSITION][pointer->x - NEXT_POSITION] = 'X';
+		}
+	}
+	else {
+		if (pointer->y == blackPawnsPosition) {
+			if (chessBoard[pointer->y - 2 * NEXT_POSITION][pointer->x] == BLANK_FIELD) {
+				possibleMoves[pointer->y - 2 * NEXT_POSITION][pointer->x] = 'X';
+			}
+		}
+		if (chessBoard[pointer->y - NEXT_POSITION][pointer->x] == BLANK_FIELD)
+		{
+			possibleMoves[pointer->y - NEXT_POSITION][pointer->x] = 'X';
+		}
+		if (pointer->x + NEXT_POSITION < chessLength && chessBoard[pointer->y - NEXT_POSITION][pointer->x + NEXT_POSITION]!=BLANK_FIELD) {
+			possibleMoves[pointer->y - NEXT_POSITION][pointer->x + NEXT_POSITION] = 'X';
+		}
+		if (pointer->x - NEXT_POSITION > CHESSLEFT && chessBoard[pointer->y - NEXT_POSITION][pointer->x - NEXT_POSITION]!=BLANK_FIELD) {
+			possibleMoves[pointer->y - NEXT_POSITION][pointer->x - NEXT_POSITION] = 'X';
+		}
+	}
+}
+
+void tower(Cursor * pointer, char chessBoard[chessWidth][chessLength], char possibleMoves[chessWidth][chessLength])
+{
 }
 
