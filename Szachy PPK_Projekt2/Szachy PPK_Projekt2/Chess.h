@@ -23,7 +23,6 @@ void putWhiteFigures(char chessBoard[chessWidth][chessLength]);
 void putFigures(char chessBoard[chessWidth][chessLength]);
 void drawMenu();
 void addToLastMove(char chess[chessWidth][chessLength], char copyChess[chessWidth][chessLength]);
-void clearX(char chessBoard[chessWidth][chessLength]);
 
 
 struct Cursor {
@@ -54,19 +53,20 @@ struct Cursor {
 	}
 };
 struct LastMoves {
-	char ChessBoard[chessLength][chessWidth];
+	char white[chessLength][chessWidth];
+	char black[chessLength][chessWidth];
 	LastMoves* previous;
 	LastMoves* next;
 };
 
-void drawChessBoard(char chess[chessWidth][chessLength], Cursor* pointer, char possibleMoves[chessWidth][chessLength]);
+void drawChessBoard( Cursor* pointer, char possibleMoves[chessWidth][chessLength],Cursor* enemyCursor);
 void setChosen(Cursor* pointer);
 void notChosen(Cursor* pointer);
-void movePointer(Cursor* pointer, char chessBoard[chessWidth][chessLength], char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
-void drawPossibleMoves(Cursor* pointer, char* figure, char chessBoard[chessWidth][chessLength], char possibleMoves[chessWidth][chessLength]);
-void bishop(Cursor * pointer, char chessBoard[chessWidth][chessLength], char possibleMoves[chessWidth][chessLength]);
-void jumper(Cursor * pointer, char chessBoard[chessWidth][chessLength], char possibleMoves[chessWidth][chessLength]);
-void king(Cursor * pointer, char chessBoard[chessWidth][chessLength], char possibleMoves[chessWidth][chessLength]);
-void queen(Cursor * pointer, char chessBoard[chessWidth][chessLength], char possibleMoves[chessWidth][chessLength]);
-void pawn(Cursor * pointer, char chessBoard[chessWidth][chessLength], char possibleMoves[chessWidth][chessLength]);
-void tower(Cursor * pointer, char chessBoard[chessWidth][chessLength], char possibleMoves[chessWidth][chessLength]);
+void movePointer(Cursor* pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
+void drawPossibleMoves(Cursor* pointer, char* figure, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
+void bishop(Cursor * pointer,  char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
+void jumper(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
+void king(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
+void queen(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
+void pawn(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
+void tower(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);

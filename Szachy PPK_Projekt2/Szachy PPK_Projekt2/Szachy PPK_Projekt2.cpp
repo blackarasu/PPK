@@ -11,40 +11,26 @@ int main()
 	LastMoves* Move0 = new LastMoves();
 	LastMoves* lastMove = Move0;
 	Cursor c('b'), c1('w');
-	char chessBoard[chessWidth][chessLength];
-	clearBoard(chessBoard);
-	putFigures(chessBoard);
-	addToLastMove(chessBoard, lastMove->ChessBoard);
-	LastMoves* currentMove = new LastMoves();
-	lastMove->next = currentMove;
-	currentMove->previous = lastMove;
-	currentMove->next = nullptr;
-	lastMove=currentMove;
+
 	do {//game loop
 		char possibleMovesPlayer1[chessWidth][chessLength];
 		clearBoard(possibleMovesPlayer1);
-
 		do {
 			system("cls");
-			drawChessBoard(chessBoard, &c1,possibleMovesPlayer1);
-			movePointer(&c1, chessBoard,possibleMovesPlayer1,&c);
+			drawChessBoard(&c1,possibleMovesPlayer1,&c);
+			movePointer(&c1,possibleMovesPlayer1,&c);
 		} while (!c1.moveCompleted);
 
 		char possibleMovesPlayer2[chessWidth][chessLength];
 		clearBoard(possibleMovesPlayer2);
 		do {
 			system("cls");
-			drawChessBoard(chessBoard, &c,possibleMovesPlayer2);
-			movePointer(&c, chessBoard,possibleMovesPlayer2,&c1);
+			drawChessBoard(&c,possibleMovesPlayer2,&c1);
+			movePointer(&c,possibleMovesPlayer2,&c1);
 		} while (!c.moveCompleted);
 
-		addToLastMove(chessBoard, lastMove->ChessBoard);
-		LastMoves* currentMove = new LastMoves();
-		lastMove->next = lastMove;
-		currentMove->previous = lastMove;
-		currentMove->next = nullptr;
-		lastMove = currentMove;
-		
+		c1.moveCompleted = false;
+		c.moveCompleted = false;
 	} while (!finish);
 
     return 0;
