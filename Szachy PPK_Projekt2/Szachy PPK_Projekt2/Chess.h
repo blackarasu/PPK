@@ -29,11 +29,13 @@ struct Cursor {
 	char enemyFiguresPositions[chessWidth][chessLength];
 	char cursorColor;
 	int x, y, chosenX, chosenY;
+	bool check;
 	bool chosen;
 	bool moveCompleted;
 	bool oneMoveBack;
 	Cursor(char color) {
 		cursorColor = color;
+		check = false;
 		chosenX = -1;
 		chosenY = -1;
 		chosen = false;
@@ -68,5 +70,6 @@ void bishop(Cursor * pointer,  char possibleMoves[chessWidth][chessLength], Curs
 void jumper(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
 void king(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
 void queen(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
+void pawnAttack(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
 void pawn(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
 void tower(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);

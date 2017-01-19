@@ -236,13 +236,14 @@ void movePointer(Cursor * pointer, char possibleMoves[chessWidth][chessLength],C
 		}
 		break;
 	case 'k':
+
 		if (enemyCursor->enemyFiguresPositions[pointer->y][pointer->x] != BLANK_FIELD) {
 			clearBoard(possibleMoves);
 			char chosenFigure = enemyCursor->enemyFiguresPositions[pointer->y][pointer->x];
 			setChosen(pointer);
 			drawPossibleMoves(pointer, &chosenFigure, possibleMoves, enemyCursor);
 		}
-		else if (possibleMoves[pointer->y][pointer->x] == 'X') {
+		else if (possibleMoves[pointer->y][pointer->x] == 'X' && (pointer->enemyFiguresPositions[pointer->y][pointer->x]!='k' && pointer->enemyFiguresPositions[pointer->y][pointer->x] != 'K')) {
 			enemyCursor->enemyFiguresPositions[pointer->y][pointer->x] = enemyCursor->enemyFiguresPositions[pointer->chosenY][pointer->chosenX];
 			enemyCursor->enemyFiguresPositions[pointer->chosenY][pointer->chosenX] = BLANK_FIELD;
 			pointer->enemyFiguresPositions[pointer->y][pointer->x] = BLANK_FIELD;
@@ -342,42 +343,42 @@ void bishop(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Curso
 
 void jumper(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor * enemyCursor)
 {
-	if ((enemyCursor->enemyFiguresPositions[pointer->y + NEXT_POSITION][pointer->x + 2 * NEXT_POSITION] == BLANK_FIELD) && (pointer->y + NEXT_POSITION < chessWidth && pointer->x + 2 * NEXT_POSITION < chessLength))
+	if ((pointer->y + NEXT_POSITION < chessWidth && pointer->x + 2 * NEXT_POSITION < chessLength) && (enemyCursor->enemyFiguresPositions[pointer->y + NEXT_POSITION][pointer->x + 2 * NEXT_POSITION] == BLANK_FIELD))
 	{
 		possibleMoves[pointer->y + NEXT_POSITION][pointer->x + 2 * NEXT_POSITION] = 'X';
 	}
 	
-	if ((enemyCursor->enemyFiguresPositions[pointer->y + NEXT_POSITION][pointer->x - 2 * NEXT_POSITION] == BLANK_FIELD) && (pointer->y + NEXT_POSITION < chessWidth && pointer->x - 2 * NEXT_POSITION >= CHESSLEFT))
+	if ((pointer->y + NEXT_POSITION < chessWidth && pointer->x - 2 * NEXT_POSITION >= CHESSLEFT) && (enemyCursor->enemyFiguresPositions[pointer->y + NEXT_POSITION][pointer->x - 2 * NEXT_POSITION] == BLANK_FIELD))
 	{
 		possibleMoves[pointer->y + NEXT_POSITION][pointer->x - 2 * NEXT_POSITION] = 'X';
 
 	}
-	if ((enemyCursor->enemyFiguresPositions[pointer->y + 2 * NEXT_POSITION][pointer->x + NEXT_POSITION] == BLANK_FIELD) && (pointer->y + 2 * NEXT_POSITION < chessWidth && pointer->x + NEXT_POSITION < chessLength))
+	if ((pointer->y + 2 * NEXT_POSITION < chessWidth && pointer->x + NEXT_POSITION < chessLength) && (enemyCursor->enemyFiguresPositions[pointer->y + 2 * NEXT_POSITION][pointer->x + NEXT_POSITION] == BLANK_FIELD) )
 	{
 		possibleMoves[pointer->y + 2 * NEXT_POSITION][pointer->x + NEXT_POSITION] = 'X';
 	}
 
-	if ((enemyCursor->enemyFiguresPositions[pointer->y + 2 * NEXT_POSITION][pointer->x - NEXT_POSITION] == BLANK_FIELD) && (pointer->y + 2 * NEXT_POSITION < chessWidth && pointer->x - NEXT_POSITION >= CHESSLEFT))
+	if ((pointer->y + 2 * NEXT_POSITION < chessWidth && pointer->x - NEXT_POSITION >= CHESSLEFT) && (enemyCursor->enemyFiguresPositions[pointer->y + 2 * NEXT_POSITION][pointer->x - NEXT_POSITION] == BLANK_FIELD))
 	{
 		possibleMoves[pointer->y + 2 * NEXT_POSITION][pointer->x - NEXT_POSITION] = 'X';
 	}
 
-	if ((enemyCursor->enemyFiguresPositions[pointer->y - NEXT_POSITION][pointer->x + 2 * NEXT_POSITION] == BLANK_FIELD) && (pointer->y - NEXT_POSITION >= CHESSUP && pointer->x + 2 * NEXT_POSITION < chessLength))
+	if ((pointer->y - NEXT_POSITION >= CHESSUP && pointer->x + 2 * NEXT_POSITION < chessLength) && (enemyCursor->enemyFiguresPositions[pointer->y - NEXT_POSITION][pointer->x + 2 * NEXT_POSITION] == BLANK_FIELD))
 	{
 		possibleMoves[pointer->y - NEXT_POSITION][pointer->x + 2 * NEXT_POSITION] = 'X';
 	}
 
-	if ((enemyCursor->enemyFiguresPositions[pointer->y - NEXT_POSITION][pointer->x - 2 * NEXT_POSITION] == BLANK_FIELD) && (pointer->y - NEXT_POSITION >= CHESSUP && pointer->x - 2 * NEXT_POSITION >= CHESSLEFT))
+	if ((pointer->y - NEXT_POSITION >= CHESSUP && pointer->x - 2 * NEXT_POSITION >= CHESSLEFT) && (enemyCursor->enemyFiguresPositions[pointer->y - NEXT_POSITION][pointer->x - 2 * NEXT_POSITION] == BLANK_FIELD))
 	{
 		possibleMoves[pointer->y - NEXT_POSITION][pointer->x - 2 * NEXT_POSITION] = 'X';
 	}
 
-	if ((enemyCursor->enemyFiguresPositions[pointer->y - 2 * NEXT_POSITION][pointer->x + NEXT_POSITION] == BLANK_FIELD) && (pointer->y - 2 * NEXT_POSITION >= CHESSUP && pointer->x + NEXT_POSITION < chessLength))
+	if ((pointer->y - 2 * NEXT_POSITION >= CHESSUP && pointer->x + NEXT_POSITION < chessLength) && (enemyCursor->enemyFiguresPositions[pointer->y - 2 * NEXT_POSITION][pointer->x + NEXT_POSITION] == BLANK_FIELD))
 	{
 		possibleMoves[pointer->y - 2 * NEXT_POSITION][pointer->x + NEXT_POSITION] = 'X';
 	}
 
-	if ((enemyCursor->enemyFiguresPositions[pointer->y - 2 * NEXT_POSITION][pointer->x - NEXT_POSITION] == BLANK_FIELD) && (pointer->y - 2 * NEXT_POSITION >= CHESSUP && pointer->x - NEXT_POSITION >= CHESSLEFT))
+	if ((pointer->y - 2 * NEXT_POSITION >= CHESSUP && pointer->x - NEXT_POSITION >= CHESSLEFT) && (enemyCursor->enemyFiguresPositions[pointer->y - 2 * NEXT_POSITION][pointer->x - NEXT_POSITION] == BLANK_FIELD))
 	{
 		possibleMoves[pointer->y - 2 * NEXT_POSITION][pointer->x - NEXT_POSITION] = 'X';
 	}
@@ -385,7 +386,76 @@ void jumper(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Curso
 
 void king(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor * enemyCursor)
 {
-
+	int enemyCursorXcpy = enemyCursor->x;
+	int enemyCursorYcpy = enemyCursor->y;
+	char allEnemyPossibleMoves[chessWidth][chessLength];
+	clearBoard(allEnemyPossibleMoves);
+	for (int y = 0; y < chessWidth; y++) {
+		for (int x = 0; x < chessLength; x++) {
+			switch (pointer->enemyFiguresPositions[y][x]) {
+			case'b':
+			case'B':
+				bishop(enemyCursor,allEnemyPossibleMoves,pointer);
+				break;
+			case'j':
+			case'J':
+				jumper(enemyCursor, allEnemyPossibleMoves, pointer);
+				break;
+			case'q':
+			case'Q':
+				queen(enemyCursor, allEnemyPossibleMoves, pointer);
+				break;
+			case'p':
+			case'P':
+				pawnAttack(enemyCursor, allEnemyPossibleMoves, pointer);
+				break;
+			case't':
+			case'T':
+				tower(enemyCursor, allEnemyPossibleMoves, pointer);
+				break;
+			}
+		}
+	}
+	if (pointer->x + NEXT_POSITION <= CHESSRIGHT && allEnemyPossibleMoves[pointer->y][pointer->x + NEXT_POSITION] == BLANK_FIELD && enemyCursor->enemyFiguresPositions[pointer->y][pointer->x + NEXT_POSITION] == BLANK_FIELD) {
+		if (pointer->x - 2 * NEXT_POSITION >= CHESSLEFT) {
+			if (allEnemyPossibleMoves[pointer->y][pointer->x - 2 * NEXT_POSITION] == BLANK_FIELD) {
+				possibleMoves[pointer->y][pointer->x + NEXT_POSITION] = 'X';
+			}
+		}
+		else {
+			possibleMoves[pointer->y][pointer->x + NEXT_POSITION] = 'X';
+		}
+	}
+	if (pointer->x - NEXT_POSITION >= CHESSLEFT && allEnemyPossibleMoves[pointer->y][pointer->x - NEXT_POSITION] == BLANK_FIELD  && enemyCursor->enemyFiguresPositions[pointer->y][pointer->x - NEXT_POSITION] == BLANK_FIELD) {
+		if (pointer->x + 2 * NEXT_POSITION<=CHESSRIGHT) {
+			if (allEnemyPossibleMoves[pointer->y][pointer->x + 2 * NEXT_POSITION] == BLANK_FIELD) {
+				possibleMoves[pointer->y][pointer->x - NEXT_POSITION] = 'X';
+			}
+		}
+		else {
+			possibleMoves[pointer->y][pointer->x - NEXT_POSITION] = 'X';
+		}
+	}
+	if (pointer->y + NEXT_POSITION <= CHESSDOWN && allEnemyPossibleMoves[pointer->y + NEXT_POSITION][pointer->x] == BLANK_FIELD && enemyCursor->enemyFiguresPositions[pointer->y + NEXT_POSITION][pointer->x] == BLANK_FIELD ) {
+		if (pointer->y - 2 * NEXT_POSITION >= CHESSUP) {
+			if (allEnemyPossibleMoves[pointer->y - 2 * NEXT_POSITION][pointer->x] == BLANK_FIELD) {
+				possibleMoves[pointer->y + NEXT_POSITION][pointer->x] = 'X';
+			}
+		}
+		else {
+			possibleMoves[pointer->y + NEXT_POSITION][pointer->x] = 'X';
+		}
+	}
+	if (pointer->y - NEXT_POSITION >= CHESSUP && allEnemyPossibleMoves[pointer->y - NEXT_POSITION][pointer->x] == BLANK_FIELD && enemyCursor->enemyFiguresPositions[pointer->y - NEXT_POSITION][pointer->x] == BLANK_FIELD ) {
+		if (pointer->y + 2 *NEXT_POSITION <= CHESSDOWN) {
+			if (allEnemyPossibleMoves[pointer->y + 2 * NEXT_POSITION][pointer->x] == BLANK_FIELD) {
+				possibleMoves[pointer->y - NEXT_POSITION][pointer->x] = 'X';
+			}
+		}
+		else {
+			possibleMoves[pointer->y - NEXT_POSITION][pointer->x] = 'X';
+		}
+	}
 }
 
 void tower(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor * enemyCursor)
@@ -446,6 +516,26 @@ void queen(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor
 	tower(pointer, possibleMoves, enemyCursor);
 }
 
+void pawnAttack(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor * enemyCursor)
+{
+	if (pointer->cursorColor == 'w') {
+		if ((pointer->x + NEXT_POSITION < chessLength && pointer->y + NEXT_POSITION < chessWidth) && pointer->enemyFiguresPositions[pointer->y + NEXT_POSITION][pointer->x + NEXT_POSITION] != BLANK_FIELD) {
+			possibleMoves[pointer->y + NEXT_POSITION][pointer->x + NEXT_POSITION] = 'X';
+		}
+		if ((pointer->x - NEXT_POSITION >= CHESSLEFT && pointer->y + NEXT_POSITION < chessWidth) && pointer->enemyFiguresPositions[pointer->y + NEXT_POSITION][pointer->x - NEXT_POSITION] != BLANK_FIELD) {
+			possibleMoves[pointer->y + NEXT_POSITION][pointer->x - NEXT_POSITION] = 'X';
+		}
+	}
+	else {
+		if ((pointer->x + NEXT_POSITION < chessLength && pointer->y - NEXT_POSITION < chessWidth) && pointer->enemyFiguresPositions[pointer->y - NEXT_POSITION][pointer->x + NEXT_POSITION] != BLANK_FIELD) {
+			possibleMoves[pointer->y - NEXT_POSITION][pointer->x + NEXT_POSITION] = 'X';
+		}
+		if ((pointer->x - NEXT_POSITION > CHESSLEFT - 1 && pointer->y - NEXT_POSITION < chessWidth) && pointer->enemyFiguresPositions[pointer->y - NEXT_POSITION][pointer->x - NEXT_POSITION] != BLANK_FIELD) {
+			possibleMoves[pointer->y - NEXT_POSITION][pointer->x - NEXT_POSITION] = 'X';
+		}
+	}
+}
+
 void pawn(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor)
 {
 	if (pointer->cursorColor=='w') {
@@ -460,12 +550,6 @@ void pawn(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor*
 		{
 			possibleMoves[pointer->y + NEXT_POSITION][pointer->x] = 'X';
 		}
-		if ((pointer->x + NEXT_POSITION < chessLength && pointer->y + NEXT_POSITION < chessWidth) && pointer->enemyFiguresPositions[pointer->y+NEXT_POSITION][pointer->x+NEXT_POSITION] != BLANK_FIELD) {
-			possibleMoves[pointer->y + NEXT_POSITION][pointer->x + NEXT_POSITION] = 'X';
-		}
-		if ((pointer->x - NEXT_POSITION > CHESSLEFT-1 && pointer->y + NEXT_POSITION < chessWidth) && pointer->enemyFiguresPositions[pointer->y + NEXT_POSITION][pointer->x - NEXT_POSITION] != BLANK_FIELD) {
-			possibleMoves[pointer->y + NEXT_POSITION][pointer->x - NEXT_POSITION] = 'X';
-		}
 	}
 	else {
 		if (pointer->y == blackPawnsPosition) {
@@ -479,13 +563,9 @@ void pawn(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor*
 		{
 			possibleMoves[pointer->y - NEXT_POSITION][pointer->x] = 'X';
 		}
-		if ((pointer->x + NEXT_POSITION < chessLength && pointer->y - NEXT_POSITION < chessWidth) && pointer->enemyFiguresPositions[pointer->y - NEXT_POSITION][pointer->x + NEXT_POSITION] != BLANK_FIELD) {
-			possibleMoves[pointer->y - NEXT_POSITION][pointer->x + NEXT_POSITION] = 'X';
-		}
-		if ((pointer->x - NEXT_POSITION > CHESSLEFT-1 && pointer->y - NEXT_POSITION < chessWidth) && pointer->enemyFiguresPositions[pointer->y - NEXT_POSITION][pointer->x - NEXT_POSITION] != BLANK_FIELD) {
-			possibleMoves[pointer->y - NEXT_POSITION][pointer->x - NEXT_POSITION] = 'X';
-		}
+		
 	}
+	pawnAttack(pointer, possibleMoves, enemyCursor);
 }
 
 void startWhitePawns(char chessBoard[chessWidth][chessLength])
