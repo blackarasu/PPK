@@ -11,52 +11,62 @@ void clearBoard(char chessboard[chessWidth][chessLength]) {
 	}
 }
 
-void startPawns(char chessBoard[chessWidth][chessLength]) {
-	for (int i = 0; i < chessWidth; i++) {
-		chessBoard[whitePawnsPosition][i] = 'p';
-	}
+void startBlackPawns(char chessBoard[chessWidth][chessLength])
+{
 	for (int i = 0; i < chessWidth; i++) {
 		chessBoard[blackPawnsPosition][i] = 'P';
 	}
 }
 
-void startTowers(char chessBoard[chessWidth][chessLength]) {
-	chessBoard[whiteSecondLane][TOWERS_POSITION1] = 't';
-	chessBoard[whiteSecondLane][TOWERS_POSITION2] = 't';
+void startBlackTowers(char chessBoard[chessWidth][chessLength])
+{
 	chessBoard[blackSecondLane][TOWERS_POSITION1] = 'T';
 	chessBoard[blackSecondLane][TOWERS_POSITION2] = 'T';
 }
 
-void startQueens(char chessBoard[chessWidth][chessLength]) {
-	chessBoard[whiteSecondLane][QUEEN_POSITION] = 'q';
+void startBlackQueens(char chessBoard[chessWidth][chessLength])
+{
 	chessBoard[blackSecondLane][QUEEN_POSITION] = 'Q';
 }
 
-void startJumpers(char chessBoard[chessWidth][chessLength]) {
-	chessBoard[whiteSecondLane][JUMPERS_POSITION1] = 'j';
-	chessBoard[whiteSecondLane][JUMPERS_POSITION2] = 'j';
+void startBlackJumpers(char chessBoard[chessWidth][chessLength])
+{
 	chessBoard[blackSecondLane][JUMPERS_POSITION1] = 'J';
 	chessBoard[blackSecondLane][JUMPERS_POSITION2] = 'J';
 }
 
-void startKings(char chessBoard[chessWidth][chessLength]) {
-	chessBoard[whiteSecondLane][KING_POSITION] = 'k';
+void startBlackKings(char chessBoard[chessWidth][chessLength])
+{
 	chessBoard[blackSecondLane][KING_POSITION] = 'K';
 }
-void startBishops(char chessBoard[chessWidth][chessLength]) {
-	chessBoard[whiteSecondLane][BISHOPS_POSITION1] = 'b';
-	chessBoard[whiteSecondLane][BISHOPS_POSITION2] = 'b';
+
+void startBlackBishops(char chessBoard[chessWidth][chessLength])
+{
 	chessBoard[blackSecondLane][BISHOPS_POSITION1] = 'B';
 	chessBoard[blackSecondLane][BISHOPS_POSITION2] = 'B';
 }
 
-void putFigures(char chessBoard[chessWidth][chessLength]) {
-	startPawns(chessBoard);
-	startTowers(chessBoard);
-	startQueens(chessBoard);
-	startJumpers(chessBoard);
-	startKings(chessBoard);
-	startBishops(chessBoard);
+void putBlackFigures(char chessBoard[chessWidth][chessLength]) {
+	startBlackPawns(chessBoard);
+	startBlackTowers(chessBoard);
+	startBlackQueens(chessBoard);
+	startBlackJumpers(chessBoard);
+	startBlackKings(chessBoard);
+	startBlackBishops(chessBoard);
+}
+void putWhiteFigures(char chessBoard[chessWidth][chessLength]) {
+	startWhitePawns(chessBoard);
+	startWhiteTowers(chessBoard);
+	startWhiteQueens(chessBoard);
+	startWhiteJumpers(chessBoard);
+	startWhiteKings(chessBoard);
+	startWhiteBishops(chessBoard);
+}
+
+void putFigures(char chessBoard[chessWidth][chessLength])
+{
+	putBlackFigures(chessBoard);
+	putWhiteFigures(chessBoard);
 }
 
 //← ↑ → ↓
@@ -212,7 +222,7 @@ void notChosen(Cursor * pointer)
 	pointer->chosenY = -1;
 }
 
-void movePointer(Cursor * pointer,char chess[chessWidth][chessLength], char possibleMoves[chessWidth][chessLength])
+void movePointer(Cursor * pointer,char chess[chessWidth][chessLength], char possibleMoves[chessWidth][chessLength],Cursor * enemyCursor)
 {
 	switch (_getch()) {
 	case 'w':
@@ -310,6 +320,7 @@ void drawPossibleMoves(Cursor * pointer, char * figure, char chessBoard[chessWid
 
 void bishop(Cursor * pointer, char chessBoard[chessWidth][chessLength], char possibleMoves[chessWidth][chessLength])
 {
+
 }
 
 void jumper(Cursor * pointer, char chessBoard[chessWidth][chessLength], char possibleMoves[chessWidth][chessLength])
@@ -328,7 +339,6 @@ void pawn(Cursor * pointer, char chessBoard[chessWidth][chessLength], char possi
 {
 	if (pointer->cursorColor=='w') {
 		if (pointer->y == whitePawnsPosition) {
-			
 			if (chessBoard[pointer->y + 2 * NEXT_POSITION][pointer->x] == BLANK_FIELD) {
 				possibleMoves[pointer->y + 2 * NEXT_POSITION][pointer->x] = 'X';
 			}
@@ -337,10 +347,10 @@ void pawn(Cursor * pointer, char chessBoard[chessWidth][chessLength], char possi
 		{
 			possibleMoves[pointer->y + NEXT_POSITION][pointer->x] = 'X';
 		}
-		if (pointer->x + NEXT_POSITION < chessLength && chessBoard[pointer->y + NEXT_POSITION][pointer->x + NEXT_POSITION]!=BLANK_FIELD) {
+		if ((pointer->x + NEXT_POSITION < chessLength && pointer->y + NEXT_POSITION < chessWidth) && pointer->enemyFiguresPositions[pointer->y+NEXT_POSITION][pointer->x+NEXT_POSITION] != BLANK_FIELD) {
 			possibleMoves[pointer->y + NEXT_POSITION][pointer->x + NEXT_POSITION] = 'X';
 		}
-		if (pointer->x - NEXT_POSITION > CHESSLEFT && chessBoard[pointer->y + NEXT_POSITION][pointer->x - NEXT_POSITION]!=BLANK_FIELD) {
+		if ((pointer->x - NEXT_POSITION > CHESSLEFT && pointer->y + NEXT_POSITION < chessWidth) && pointer->enemyFiguresPositions[pointer->y + NEXT_POSITION][pointer->x - NEXT_POSITION] != BLANK_FIELD) {
 			possibleMoves[pointer->y + NEXT_POSITION][pointer->x - NEXT_POSITION] = 'X';
 		}
 	}
@@ -354,10 +364,10 @@ void pawn(Cursor * pointer, char chessBoard[chessWidth][chessLength], char possi
 		{
 			possibleMoves[pointer->y - NEXT_POSITION][pointer->x] = 'X';
 		}
-		if (pointer->x + NEXT_POSITION < chessLength && chessBoard[pointer->y - NEXT_POSITION][pointer->x + NEXT_POSITION]!=BLANK_FIELD) {
+		if ((pointer->x + NEXT_POSITION < chessLength && pointer->y - NEXT_POSITION < chessWidth) && pointer->enemyFiguresPositions[pointer->y - NEXT_POSITION][pointer->x + NEXT_POSITION] != BLANK_FIELD) {
 			possibleMoves[pointer->y - NEXT_POSITION][pointer->x + NEXT_POSITION] = 'X';
 		}
-		if (pointer->x - NEXT_POSITION > CHESSLEFT && chessBoard[pointer->y - NEXT_POSITION][pointer->x - NEXT_POSITION]!=BLANK_FIELD) {
+		if ((pointer->x - NEXT_POSITION > CHESSLEFT && pointer->y - NEXT_POSITION < chessWidth) && pointer->enemyFiguresPositions[pointer->y - NEXT_POSITION][pointer->x - NEXT_POSITION] != BLANK_FIELD) {
 			possibleMoves[pointer->y - NEXT_POSITION][pointer->x - NEXT_POSITION] = 'X';
 		}
 	}
@@ -367,3 +377,37 @@ void tower(Cursor * pointer, char chessBoard[chessWidth][chessLength], char poss
 {
 }
 
+void startWhitePawns(char chessBoard[chessWidth][chessLength])
+{
+	for (int i = 0; i < chessWidth; i++) {
+		chessBoard[whitePawnsPosition][i] = 'p';
+	}
+}
+
+void startWhiteTowers(char chessBoard[chessWidth][chessLength])
+{
+	chessBoard[whiteSecondLane][TOWERS_POSITION1] = 't';
+	chessBoard[whiteSecondLane][TOWERS_POSITION2] = 't';
+}
+
+void startWhiteQueens(char chessBoard[chessWidth][chessLength])
+{
+	chessBoard[whiteSecondLane][QUEEN_POSITION] = 'q';
+}
+
+void startWhiteJumpers(char chessBoard[chessWidth][chessLength])
+{
+	chessBoard[whiteSecondLane][JUMPERS_POSITION1] = 'j';
+	chessBoard[whiteSecondLane][JUMPERS_POSITION2] = 'j';
+}
+
+void startWhiteKings(char chessBoard[chessWidth][chessLength])
+{
+	chessBoard[whiteSecondLane][KING_POSITION] = 'k';
+}
+
+void startWhiteBishops(char chessBoard[chessWidth][chessLength])
+{
+	chessBoard[whiteSecondLane][BISHOPS_POSITION1] = 'b';
+	chessBoard[whiteSecondLane][BISHOPS_POSITION2] = 'b';
+}

@@ -23,17 +23,19 @@ int main()
 	do {//game loop
 		char possibleMovesPlayer1[chessWidth][chessLength];
 		clearBoard(possibleMovesPlayer1);
+
 		do {
 			system("cls");
 			drawChessBoard(chessBoard, &c1,possibleMovesPlayer1);
-			movePointer(&c1, chessBoard,possibleMovesPlayer1);
+			movePointer(&c1, chessBoard,possibleMovesPlayer1,&c);
 		} while (!c1.moveCompleted);
+
 		char possibleMovesPlayer2[chessWidth][chessLength];
 		clearBoard(possibleMovesPlayer2);
 		do {
 			system("cls");
 			drawChessBoard(chessBoard, &c,possibleMovesPlayer2);
-			movePointer(&c, chessBoard,possibleMovesPlayer2);
+			movePointer(&c, chessBoard,possibleMovesPlayer2,&c1);
 		} while (!c.moveCompleted);
 
 		addToLastMove(chessBoard, lastMove->ChessBoard);
