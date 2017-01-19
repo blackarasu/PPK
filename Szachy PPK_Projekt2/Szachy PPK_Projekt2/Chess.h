@@ -22,7 +22,7 @@ void putBlackFigures(char chessBoard[chessWidth][chessLength]);
 void putWhiteFigures(char chessBoard[chessWidth][chessLength]);
 void putFigures(char chessBoard[chessWidth][chessLength]);
 void drawMenu();
-void addToLastMove(char chess[chessWidth][chessLength], char copyChess[chessWidth][chessLength]);
+
 
 
 struct Cursor {

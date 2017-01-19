@@ -196,14 +196,7 @@ void drawChessBoard(Cursor* pointer, char possibleMoves[chessWidth][chessLength]
 	drawMenu();
 }
 
-void addToLastMove(char chess[chessWidth][chessLength], char copyChess[chessWidth][chessLength])
-{
-	for (int i = 0; i < chessWidth; i++) {
-		for (int j = 0; j < chessLength; j++) {
-			copyChess[i][j] = chess[i][j];
-		}
-	}
-}
+
 
 void setChosen(Cursor * pointer)
 {
@@ -392,6 +385,7 @@ void jumper(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Curso
 
 void king(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor * enemyCursor)
 {
+
 }
 
 void tower(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor * enemyCursor)
