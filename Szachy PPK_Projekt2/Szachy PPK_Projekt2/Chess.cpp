@@ -552,11 +552,14 @@ void king(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor 
 	enemyCursor->x = enemyCursorXcpy;
 	enemyCursor->y = enemyCursorYcpy;
 	PossibleMovesOfKing(pointer, possibleMoves, enemyCursor, allEnemyPossibleMoves);
-	if (CheckMate(possibleMoves)) {
+	if (CheckMate(possibleMoves) && allEnemyPossibleMoves[enemyCursor->enemyKingY][enemyCursor->enemyKingX] == 'X') {
 		pointer->checkmate = true;
 	}
 	else if (allEnemyPossibleMoves[enemyCursor->enemyKingY][enemyCursor->enemyKingX] == 'X') {
 		pointer->check = true;
+	}
+	else {
+		pointer->check = false;
 	}
 }
 

@@ -15,6 +15,15 @@ int main()
 	do {//game loop
 		char possibleMovesPlayer1[chessWidth][chessLength];
 		clearBoard(possibleMovesPlayer1);
+		king(&c1, possibleMovesPlayer1, &c);
+		clearBoard(possibleMovesPlayer1);
+		if (c1.checkmate) {
+			system("cls");
+			std::cout << "Gracz 2 wygral partyjke ";
+			_getch();
+			break;
+		}
+
 		do {
 			system("cls");
 			drawChessBoard(&c1,possibleMovesPlayer1,&c);
@@ -23,8 +32,15 @@ int main()
 		
 
 		char possibleMovesPlayer2[chessWidth][chessLength];
-		
 		clearBoard(possibleMovesPlayer2);
+		king(&c, possibleMovesPlayer2, &c1);
+		clearBoard(possibleMovesPlayer2);
+		if (c.checkmate) {
+			system("cls");
+			std::cout << "Gracz 1 wygral partyjke ";
+			_getch();
+			break;
+		}
 		do {
 			system("cls");
 			drawChessBoard(&c,possibleMovesPlayer2,&c1);
