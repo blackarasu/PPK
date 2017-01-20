@@ -20,8 +20,10 @@ int main()
 			drawChessBoard(&c1,possibleMovesPlayer1,&c);
 			movePointer(&c1,possibleMovesPlayer1,&c);
 		} while (!c1.moveCompleted);
+		
 
 		char possibleMovesPlayer2[chessWidth][chessLength];
+		
 		clearBoard(possibleMovesPlayer2);
 		do {
 			system("cls");
@@ -31,7 +33,7 @@ int main()
 
 		c1.moveCompleted = false;
 		c.moveCompleted = false;
-	} while (!finish);
+	} while (true);
 
     return 0;
 }

@@ -21,6 +21,7 @@ void startWhiteBishops(char chessBoard[chessWidth][chessLength]);
 void putBlackFigures(char chessBoard[chessWidth][chessLength]);
 void putWhiteFigures(char chessBoard[chessWidth][chessLength]);
 void putFigures(char chessBoard[chessWidth][chessLength]);
+
 void drawMenu();
 
 
@@ -28,8 +29,9 @@ void drawMenu();
 struct Cursor {
 	char enemyFiguresPositions[chessWidth][chessLength];
 	char cursorColor;
-	int x, y, chosenX, chosenY;
+	int x, y, chosenX, chosenY, enemyKingX,enemyKingY;
 	bool check;
+	bool checkmate;
 	bool chosen;
 	bool moveCompleted;
 	bool oneMoveBack;
@@ -41,14 +43,18 @@ struct Cursor {
 		chosen = false;
 		moveCompleted = false;
 		oneMoveBack = false;
+		checkmate = false;
+		enemyKingX = KING_POSITION;
 		clearBoard(enemyFiguresPositions);
 		if (color == 'b') {
 			putWhiteFigures(enemyFiguresPositions);
+			enemyKingY = whiteSecondLane;
 			x = 0;
 			y = 7;		
 		}
 		if (color == 'w') {
 			putBlackFigures(enemyFiguresPositions);
+			enemyKingY = blackSecondLane;
 			x = 0;
 			y = 0;
 		}
@@ -61,6 +67,7 @@ struct LastMoves {
 	LastMoves* next;
 };
 
+bool CheckMate(char possibleKingMoves[chessWidth][chessLength]);
 void drawChessBoard( Cursor* pointer, char possibleMoves[chessWidth][chessLength],Cursor* enemyCursor);
 void setChosen(Cursor* pointer);
 void notChosen(Cursor* pointer);
@@ -68,6 +75,7 @@ void movePointer(Cursor* pointer, char possibleMoves[chessWidth][chessLength], C
 void drawPossibleMoves(Cursor* pointer, char* figure, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
 void bishop(Cursor * pointer,  char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
 void jumper(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
+void PossibleMovesOfKing(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor, char allEnemyPossibleMoves[chessWidth][chessLength]);
 void king(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
 void queen(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
 void pawnAttack(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
