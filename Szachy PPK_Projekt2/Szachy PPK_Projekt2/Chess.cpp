@@ -318,8 +318,9 @@ void drawPossibleMoves(Cursor * pointer, char * figure, char possibleMoves[chess
 		else {
 			if (enemyCursor->enemyFigure!=nullptr) {
 				enemyAntiCheckmate* currentFigure = enemyCursor->enemyFigure;
-				isThisFigureAntiCheckmate(pointer, currentFigure);
-				possibleMoves[currentFigure->antiY][currentFigure->antiX] = 'X';
+				if (isThisFigureAntiCheckmate(pointer, currentFigure)) {
+					possibleMoves[currentFigure->antiY][currentFigure->antiX] = 'X';
+				}
 			}
 		}
 	}
@@ -725,7 +726,8 @@ bool isThisFigureAntiCheckmate(Cursor * pointer, enemyAntiCheckmate * guider)
 			return true;
 		}
 		else {
-			guider->next = guider;
+			guider = guider->next;
+
 		}
 	}
 	return false;
