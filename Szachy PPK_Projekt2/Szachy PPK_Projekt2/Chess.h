@@ -24,9 +24,16 @@ void putFigures(char chessBoard[chessWidth][chessLength]);
 
 void drawMenu();
 
-
+struct enemyAntiCheckmate {
+	int x, y, antiX, antiY;
+	enemyAntiCheckmate* next;
+	~enemyAntiCheckmate() {
+		delete next;
+	}
+};
 
 struct Cursor {
+	enemyAntiCheckmate *enemyFigure,*lastAntiCheckmate;
 	char enemyFiguresPositions[chessWidth][chessLength];
 	char cursorColor;
 	int x, y, chosenX, chosenY, enemyKingX,enemyKingY;
@@ -36,6 +43,8 @@ struct Cursor {
 	bool moveCompleted;
 	bool oneMoveBack;
 	Cursor(char color) {
+		enemyFigure = new enemyAntiCheckmate();
+		lastAntiCheckmate = enemyFigure;
 		cursorColor = color;
 		check = false;
 		chosenX = -1;
@@ -80,8 +89,9 @@ void king(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor*
 void findAllEnemyPossibleMoves(Cursor* pointer, int& checkCounter, char allEnemyPossibleMoves[chessWidth][chessLength], Cursor* enemyCursor, char oneEnemyPossibleMoves[chessWidth][chessLength]);
 void addToEnemiesPossibleForKing(char oneFigure[chessWidth][chessLength], char allFigures[chessWidth][chessLength]);
 bool findMyMoves(Cursor* pointer, char allEnemyPossibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
-bool whetherPossibleMoves(char myFigurePossibleMoves[chessWidth][chessLength], char enemyCheckableFigurePossibleMoves[chessWidth][chessLength]);
+bool whetherPossibleMoves(char myFigurePossibleMoves[chessWidth][chessLength], char enemyCheckableFigurePossibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
 void queen(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
 void pawnAttack(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
 void pawn(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
 void tower(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
+bool isThisFigureAntiCheckmate(Cursor* pointer, enemyAntiCheckmate* guider);

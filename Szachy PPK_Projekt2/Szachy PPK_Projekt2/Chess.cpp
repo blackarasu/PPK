@@ -86,7 +86,7 @@ bool CheckMate(char possibleKingMoves[chessWidth][chessLength])
 	for (int i = 0; i < chessWidth; i++) {
 		for (int j = 0; j < chessLength; j++) {
 			if (possibleKingMoves[i][j] == 'X') {
-				possibleMoves++;
+				++possibleMoves;
 			}
 		}
 	}
@@ -314,6 +314,13 @@ void drawPossibleMoves(Cursor * pointer, char * figure, char possibleMoves[chess
 	else {
 		if (*figure == 'k' || *figure == 'K') {
 			king(pointer, possibleMoves, enemyCursor);
+		}
+		else {
+			if (enemyCursor->enemyFigure!=nullptr) {
+				enemyAntiCheckmate* currentFigure = enemyCursor->enemyFigure;
+				isThisFigureAntiCheckmate(pointer, currentFigure);
+				possibleMoves[currentFigure->antiY][currentFigure->antiX] = 'X';
+			}
 		}
 	}
 }
@@ -600,13 +607,14 @@ void addToEnemiesPossibleForKing(char oneFigure[chessWidth][chessLength], char a
 
 bool findMyMoves(Cursor * pointer, char oneEnemyPossibleMoves[chessWidth][chessLength], Cursor * enemyCursor)
 {
+	bool found = false;
 	for (int y = 0; y < chessWidth; y++) {
 		for (int x = 0; x < chessLength; x++) {
 			char oneFigurePositions[chessWidth][chessLength];
 			clearBoard(oneFigurePositions);
 			enemyCursor->x = x;
 			enemyCursor->y = y;
-			switch (pointer->enemyFiguresPositions[y][x]) {
+			switch (enemyCursor->enemyFiguresPositions[y][x]) {
 			case'b':
 			case'B':
 				bishop(pointer, oneFigurePositions, enemyCursor);
@@ -628,21 +636,29 @@ bool findMyMoves(Cursor * pointer, char oneEnemyPossibleMoves[chessWidth][chessL
 				tower(pointer, oneFigurePositions, enemyCursor);
 				break;
 			}
-			if (whetherPossibleMoves(oneFigurePositions, oneEnemyPossibleMoves)) {
-
-				return true;
+			if (whetherPossibleMoves(oneFigurePositions, oneEnemyPossibleMoves, enemyCursor)) {
+				enemyCursor->lastAntiCheckmate->x = x;
+				enemyCursor->lastAntiCheckmate->y = y;
+				enemyAntiCheckmate* tmp = new enemyAntiCheckmate();
+				enemyCursor->lastAntiCheckmate->next = tmp;
+				enemyCursor->lastAntiCheckmate = tmp;
+				found = true;
 			}
 		}
+	}
+	if (found == true) {
+		return true;
 	}
 	return false;
 }
 
-bool whetherPossibleMoves(char myFigurePossibleMoves[chessWidth][chessLength], char enemyCheckableFigurePossibleMoves[chessWidth][chessLength])
+bool whetherPossibleMoves(char myFigurePossibleMoves[chessWidth][chessLength], char enemyCheckableFigurePossibleMoves[chessWidth][chessLength], Cursor* enemyCursor)
 {
 	for (int i = 0; i < chessWidth; i++) {
 		for (int j = 0; j < chessLength; j++) {
 			if (myFigurePossibleMoves[i][j] == 'X' && enemyCheckableFigurePossibleMoves[i][j] == 'X') {
-
+				enemyCursor->lastAntiCheckmate->antiX = j;
+				enemyCursor->lastAntiCheckmate->antiY = i;
 				return true;
 			}
 		}
@@ -700,6 +716,19 @@ void tower(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor
 			possibleMoves[pointer->y][X] = 'X';
 		}
 	}
+}
+
+bool isThisFigureAntiCheckmate(Cursor * pointer, enemyAntiCheckmate * guider)
+{
+	while (guider!=nullptr) {
+		if (guider->x == pointer->x && guider->y == pointer->y) {
+			return true;
+		}
+		else {
+			guider->next = guider;
+		}
+	}
+	return false;
 }
 
 void queen(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor * enemyCursor)

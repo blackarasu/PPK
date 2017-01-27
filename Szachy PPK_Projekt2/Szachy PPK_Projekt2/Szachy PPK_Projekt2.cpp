@@ -29,7 +29,10 @@ int main()
 			drawChessBoard(&c1,possibleMovesPlayer,&c);
 			movePointer(&c1,possibleMovesPlayer,&c);
 		} while (!c1.moveCompleted);
-		
+		enemyAntiCheckmate* tmp = new enemyAntiCheckmate();
+		c.lastAntiCheckmate = c.enemyFigure;
+		delete c.lastAntiCheckmate;
+		c.enemyFigure = tmp;
 
 
 		clearBoard(possibleMovesPlayer);
@@ -46,6 +49,10 @@ int main()
 			drawChessBoard(&c,possibleMovesPlayer,&c1);
 			movePointer(&c,possibleMovesPlayer,&c1);
 		} while (!c.moveCompleted);
+		tmp = new enemyAntiCheckmate();
+		c1.lastAntiCheckmate = c1.enemyFigure;
+		delete c1.lastAntiCheckmate;
+		c1.enemyFigure = tmp;
 
 		c1.moveCompleted = false;
 		c.moveCompleted = false;
