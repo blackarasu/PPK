@@ -13,10 +13,10 @@ int main()
 	Cursor c('b'), c1('w');
 
 	do {//game loop
-		char possibleMovesPlayer1[chessWidth][chessLength];
-		clearBoard(possibleMovesPlayer1);
-		king(&c1, possibleMovesPlayer1, &c);
-		clearBoard(possibleMovesPlayer1);
+		char possibleMovesPlayer[chessWidth][chessLength];
+		clearBoard(possibleMovesPlayer);
+		king(&c1, possibleMovesPlayer, &c);
+		clearBoard(possibleMovesPlayer);
 		if (c1.checkmate) {
 			system("cls");
 			std::cout << "Gracz 2 wygral partyjke ";
@@ -26,15 +26,15 @@ int main()
 
 		do {
 			system("cls");
-			drawChessBoard(&c1,possibleMovesPlayer1,&c);
-			movePointer(&c1,possibleMovesPlayer1,&c);
+			drawChessBoard(&c1,possibleMovesPlayer,&c);
+			movePointer(&c1,possibleMovesPlayer,&c);
 		} while (!c1.moveCompleted);
 		
 
-		char possibleMovesPlayer2[chessWidth][chessLength];
-		clearBoard(possibleMovesPlayer2);
-		king(&c, possibleMovesPlayer2, &c1);
-		clearBoard(possibleMovesPlayer2);
+
+		clearBoard(possibleMovesPlayer);
+		king(&c, possibleMovesPlayer, &c1);
+		clearBoard(possibleMovesPlayer);
 		if (c.checkmate) {
 			system("cls");
 			std::cout << "Gracz 1 wygral partyjke ";
@@ -43,8 +43,8 @@ int main()
 		}
 		do {
 			system("cls");
-			drawChessBoard(&c,possibleMovesPlayer2,&c1);
-			movePointer(&c,possibleMovesPlayer2,&c1);
+			drawChessBoard(&c,possibleMovesPlayer,&c1);
+			movePointer(&c,possibleMovesPlayer,&c1);
 		} while (!c.moveCompleted);
 
 		c1.moveCompleted = false;

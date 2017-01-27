@@ -77,6 +77,10 @@ void bishop(Cursor * pointer,  char possibleMoves[chessWidth][chessLength], Curs
 void jumper(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
 void PossibleMovesOfKing(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor, char allEnemyPossibleMoves[chessWidth][chessLength]);
 void king(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
+void findAllEnemyPossibleMoves(Cursor* pointer, int& checkCounter, char allEnemyPossibleMoves[chessWidth][chessLength], Cursor* enemyCursor, char oneEnemyPossibleMoves[chessWidth][chessLength]);
+void addToEnemiesPossibleForKing(char oneFigure[chessWidth][chessLength], char allFigures[chessWidth][chessLength]);
+bool findMyMoves(Cursor* pointer, char allEnemyPossibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
+bool whetherPossibleMoves(char myFigurePossibleMoves[chessWidth][chessLength], char enemyCheckableFigurePossibleMoves[chessWidth][chessLength]);
 void queen(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
 void pawnAttack(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
 void pawn(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
