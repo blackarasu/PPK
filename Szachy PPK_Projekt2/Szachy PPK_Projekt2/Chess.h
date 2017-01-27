@@ -71,9 +71,12 @@ struct Cursor {
 };
 struct LastMoves {
 	char white[chessLength][chessWidth];
+	int whitePointerX, whitePointerY;
+	int blackPointerX, blackPointerY;
 	char black[chessLength][chessWidth];
 	LastMoves* previous;
 	LastMoves* next;
+
 };
 
 bool CheckMate(char possibleKingMoves[chessWidth][chessLength]);
@@ -95,3 +98,8 @@ void pawnAttack(Cursor * pointer, char possibleMoves[chessWidth][chessLength], C
 void pawn(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
 void tower(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor* enemyCursor);
 bool isThisFigureAntiCheckmate(Cursor* pointer, enemyAntiCheckmate* guider);
+void saveLastMove(LastMoves*& currentMove, Cursor* whitePlayer, Cursor* blackPlayer);
+void copyTable(char original[chessWidth][chessLength], char copy[chessWidth][chessLength]);
+bool isItBeginingOfTheGame(LastMoves* currentMove);
+void oneStepBack(LastMoves*& currentMove, Cursor* whitePlayer, Cursor* blackPlayer);
+bool doYouWantOneStepBack(Cursor* playerWhoIsAsked);

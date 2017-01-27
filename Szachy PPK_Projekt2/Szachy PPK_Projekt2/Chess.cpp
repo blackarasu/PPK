@@ -274,6 +274,10 @@ void movePointer(Cursor * pointer, char possibleMoves[chessWidth][chessLength],C
 			pointer->moveCompleted = true;
 		}
 		break;
+	case char(BACKSPACE) :
+		pointer->oneMoveBack = true;
+		pointer->moveCompleted = true;
+		break;
 	case char(ESCAPE) :
 		notChosen(pointer);
 		clearBoard(possibleMoves);
@@ -732,6 +736,89 @@ bool isThisFigureAntiCheckmate(Cursor * pointer, enemyAntiCheckmate * guider)
 	}
 	return false;
 }
+
+void saveLastMove(LastMoves*& currentMove, Cursor * whitePlayer, Cursor * blackPlayer)
+{
+	LastMoves* nextMove = new LastMoves;
+	currentMove->whitePointerX = whitePlayer->x;
+	currentMove->whitePointerY = whitePlayer->y;
+	currentMove->blackPointerX = blackPlayer->x;
+	currentMove->blackPointerY = blackPlayer->y;
+	copyTable(whitePlayer->enemyFiguresPositions, currentMove->black);
+	copyTable(blackPlayer->enemyFiguresPositions, currentMove->white);
+	nextMove->previous = currentMove;
+	nextMove->next = nullptr;
+	currentMove->next = nextMove;
+	if (currentMove->previous != nullptr) {
+		currentMove->previous->next = currentMove;
+	}
+	currentMove = nextMove;
+}
+
+void copyTable(char original[chessWidth][chessLength], char copy[chessWidth][chessLength])
+{
+	for (int i = 0; i < chessWidth; i++) {
+		for (int j = 0; j < chessLength; j++) {
+			copy[i][j] = original[i][j];
+		}
+	}
+}
+
+bool isItBeginingOfTheGame(LastMoves * currentMove)
+{
+	if (currentMove->previous->previous == nullptr) {
+		return true;
+	}
+	return false;
+}
+
+void oneStepBack(LastMoves*& currentMove, Cursor * whitePlayer, Cursor * blackPlayer)
+{
+	LastMoves* nothing = currentMove;
+	currentMove = currentMove->previous;
+	LastMoves* toDelete= currentMove;
+	currentMove = currentMove->previous;
+	delete toDelete;
+	whitePlayer->x = currentMove->whitePointerX;
+	whitePlayer->y = currentMove->whitePointerY;
+	blackPlayer->x = currentMove->blackPointerX;
+	blackPlayer->y = currentMove->blackPointerY;
+	copyTable(currentMove->black, whitePlayer->enemyFiguresPositions);
+	copyTable(currentMove->white, blackPlayer->enemyFiguresPositions);
+	currentMove->next = nothing;
+	nothing->previous = currentMove;
+	currentMove = nothing;
+}
+
+bool doYouWantOneStepBack(Cursor * playerWhoIsAsked)
+{
+	bool check_cin = true;
+	do {
+		std::cout << "Gracz ";
+		if (playerWhoIsAsked->cursorColor == 'w') {
+			std::cout << "2 ";
+		}
+		else {
+			std::cout << "1 ";
+		}
+		bool check_cin = true;
+		std::cout << " chce cofnac jeden ruch. Zgadzasz sie? " << std::endl
+			<< "Twoj wybor (y/n) ";
+		char choice = _getch();
+		if (choice == 'y') {
+			return true;
+		}
+		else if (choice == 'n') {
+			return false;
+		}
+		else {
+			system("cls");
+			check_cin = false;
+			std::cout << "Nalezy nacisnac \'y\' lub\'n\'" << std::endl;
+		}
+	} while (!check_cin);
+}
+
 
 void queen(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor * enemyCursor)
 {

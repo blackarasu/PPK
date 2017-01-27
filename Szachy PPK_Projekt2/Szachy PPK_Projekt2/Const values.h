@@ -25,3 +25,4 @@ const int BISHOPS_POSITION1 = 2;
 const int BISHOPS_POSITION2 = 5;
 const char BLANK_FIELD = ' ';
 const int NEXT_POSITION = 1;
+const int BACKSPACE = 8;
