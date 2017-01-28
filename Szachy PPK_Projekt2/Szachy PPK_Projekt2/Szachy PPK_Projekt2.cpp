@@ -43,6 +43,7 @@ int main()
 		c.lastAntiCheckmate = c.enemyFigure;
 		delete c.lastAntiCheckmate;
 		c.enemyFigure = tmp;
+		c.lastAntiCheckmate = tmp;
 		clearBoard(possibleMovesPlayer);
 		king(&c, possibleMovesPlayer, &c1);
 		clearBoard(possibleMovesPlayer);
@@ -71,6 +72,7 @@ int main()
 		c1.lastAntiCheckmate = c1.enemyFigure;
 		delete c1.lastAntiCheckmate;
 		c1.enemyFigure = tmp;
+		c1.lastAntiCheckmate = tmp;
 		if ((c1.oneMoveBack && c.oneMoveBack) && !isItBeginingOfTheGame(lastMove)) {
 			oneStepBack(lastMove, &c1, &c);
 			c1.oneMoveBack = false;

@@ -529,15 +529,11 @@ void PossibleMovesOfKing(Cursor * pointer, char possibleMoves[chessWidth][chessL
 void king(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor * enemyCursor)
 {
 	int checkCounter = 0;
-	int enemyCursorXcpy = enemyCursor->x;
-	int enemyCursorYcpy = enemyCursor->y;
 	char allEnemyPossibleMoves[chessWidth][chessLength];
 	clearBoard(allEnemyPossibleMoves);
 	char oneEnemyPossibleMoves[chessWidth][chessLength];
 	clearBoard(oneEnemyPossibleMoves);
 	findAllEnemyPossibleMoves(pointer, checkCounter, allEnemyPossibleMoves, enemyCursor, oneEnemyPossibleMoves);
-	enemyCursor->x = enemyCursorXcpy;
-	enemyCursor->y = enemyCursorYcpy;
 	PossibleMovesOfKing(pointer, possibleMoves, enemyCursor, allEnemyPossibleMoves);
 	if (CheckMate(possibleMoves) && allEnemyPossibleMoves[enemyCursor->enemyKingY][enemyCursor->enemyKingX] == 'X') {
 		if (checkCounter == 1) {
@@ -558,10 +554,13 @@ void king(Cursor * pointer, char possibleMoves[chessWidth][chessLength], Cursor 
 	else {
 		pointer->check = false;
 	}
+	
 }
 
 void findAllEnemyPossibleMoves(Cursor * pointer, int & checkCounter, char allEnemyPossibleMoves[chessWidth][chessLength], Cursor * enemyCursor, char oneEnemyPossibleMoves[chessWidth][chessLength])
 {
+	int enemyCursorXcpy = enemyCursor->x;
+	int enemyCursorYcpy = enemyCursor->y;
 	for (int y = 0; y < chessWidth; y++) {
 		for (int x = 0; x < chessLength; x++) {
 			char oneFigurePositions[chessWidth][chessLength];
@@ -597,6 +596,8 @@ void findAllEnemyPossibleMoves(Cursor * pointer, int & checkCounter, char allEne
 			addToEnemiesPossibleForKing(oneFigurePositions, allEnemyPossibleMoves);
 		}
 	}
+	enemyCursor->x = enemyCursorXcpy;
+	enemyCursor->y = enemyCursorYcpy;
 }
 
 void addToEnemiesPossibleForKing(char oneFigure[chessWidth][chessLength], char allFigures[chessWidth][chessLength])
@@ -612,13 +613,15 @@ void addToEnemiesPossibleForKing(char oneFigure[chessWidth][chessLength], char a
 
 bool findMyMoves(Cursor * pointer, char oneEnemyPossibleMoves[chessWidth][chessLength], Cursor * enemyCursor)
 {
+	int myPointerX = pointer->x;
+	int myPointerY = pointer->y;
 	bool found = false;
 	for (int y = 0; y < chessWidth; y++) {
+		pointer->y = y;
 		for (int x = 0; x < chessLength; x++) {
 			char oneFigurePositions[chessWidth][chessLength];
 			clearBoard(oneFigurePositions);
-			enemyCursor->x = x;
-			enemyCursor->y = y;
+			pointer->x = x;
 			switch (enemyCursor->enemyFiguresPositions[y][x]) {
 			case'b':
 			case'B':
@@ -651,6 +654,8 @@ bool findMyMoves(Cursor * pointer, char oneEnemyPossibleMoves[chessWidth][chessL
 			}
 		}
 	}
+	pointer->x = myPointerX;
+	pointer->y = myPointerY;
 	if (found == true) {
 		return true;
 	}
