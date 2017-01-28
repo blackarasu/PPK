@@ -32,8 +32,8 @@ int main()
 			else if (c.oneMoveBack) {
 				if (doYouWantOneStepBack(&c1)) {
 					c1.oneMoveBack = true;
-					break;
 				}
+				break;
 			}
 			drawChessBoard(&c1,possibleMovesPlayer,&c);
 			movePointer(&c1,possibleMovesPlayer,&c);
@@ -62,8 +62,8 @@ int main()
 			else if (c1.oneMoveBack) {
 				if (doYouWantOneStepBack(&c)) {
 					c.oneMoveBack = true;
-					break;
 				}
+				break;
 			}
 			drawChessBoard(&c,possibleMovesPlayer,&c1);
 			movePointer(&c,possibleMovesPlayer,&c1);
