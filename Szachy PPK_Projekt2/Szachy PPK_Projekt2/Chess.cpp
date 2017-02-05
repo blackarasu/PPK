@@ -822,6 +822,7 @@ bool doYouWantOneStepBack(Cursor * playerWhoIsAsked)
 			std::cout << "Nalezy nacisnac \'y\' lub\'n\'" << std::endl;
 		}
 	} while (!check_cin);
+	return false;
 }
 
 
